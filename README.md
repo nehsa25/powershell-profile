@@ -9,10 +9,10 @@
 A Powershell Profile offering useful functions and enhancements to make using Powershell easier.
 
 Function Examples:
-* Chocately integration (for refreshenv on Powershell)
+* Chocolatey integration (for refreshenv on Powershell)
 * The weather (weather "city,state" - no spaces)
 * Colorized ls Function
-* Helpful commands for a wide variety of tools:  Chef, Chocately, Playwright, Git, Mercurial, Powershell.. 
+* Helpful commands for a wide variety of tools:  Chef, Chocolatey, Playwright, Git, Mercurial, Powershell.. 
 
 ## Table of Contents
 
