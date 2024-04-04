@@ -58,7 +58,7 @@ Useful jq commands
 Useful Docker commands
 * `docker container ps` - Lists containers and their status
 * `docker save --output .\out.tar` - Saves local docker image
-* `docker load -i .\out.tar - Loads local docker image
+* `docker load -i .\out.tar` - Loads local docker image
 * `ddocker container create --name local-dev node:20` - Creates container from image
 
 Useful Mercurial commands

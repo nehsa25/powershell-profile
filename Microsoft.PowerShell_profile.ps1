@@ -190,8 +190,8 @@ if ($env:show_ps_profile -ne 'false') {
 	write-host 'Useful Docker commands' -foregroundcolor $text_color_error
 	write-host '* "docker container ps" - Lists containers and their status'
 	write-host '* "docker save --output .\out.tar" - Saves local docker image'
-	write-host '* "docker load -i .\out.tar - Loads local docker image'
-	write-host '* "ddocker container create --name local-dev node:20" - Creates container from image'
+	write-host '* "docker load -i .\out.tar" - Loads local docker image'
+	write-host '* "docker container create --name local-dev node:20" - Creates container from image'
 	write-host ''
 	write-host 'Useful Mercurial commands' -foregroundcolor $text_color_error
 	write-host '* "hg forget "set:hgignore() and not ignored()"" - Updates added files based on .hgignore'
