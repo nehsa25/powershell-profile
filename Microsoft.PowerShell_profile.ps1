@@ -8,15 +8,7 @@ ______                _  _    ______                _
 | |/ / | (_) || | | |   | |_  | |    | (_| || | | || || (__  _                            
 |___/   \___/ |_| |_|    \__| \_|     \__,_||_| |_||_| \___|(_)                           
                                                                                           
-                                                                                          
-         ______                       _                ___       _                        
-         |  _  \                     | |              / _ \     | |                       
- ______  | | | |  ___   _   _   __ _ | |  __ _  ___  / /_\ \  __| |  __ _  _ __ ___   ___ 
-|______| | | | | / _ \ | | | | / _` || | / _` |/ __| |  _  | / _` | / _` || '_ ` _ \ / __|
-         | |/ / | (_) || |_| || (_| || || (_| |\__ \ | | | || (_| || (_| || | | | | |\__ \
-         |___/   \___/  \__,_| \__, ||_| \__,_||___/ \_| |_/ \__,_| \__,_||_| |_| |_||___/
-                                __/ |                                                     
-                               |___/                                                      
+                                                  -Douglas Adams                                                                                                        
 '@;
 
 
@@ -167,8 +159,8 @@ if ($env:show_ps_profile -ne 'false') {
 	write-host ''
 	write-host 'Aliases' -foregroundcolor $text_color_error
 	write-host '* "npp" - Launches Notepad++'
-	write-host '* "weather `"Casablanca,Morocco`"" - The weather :)'
-	write-host '* "weather_full `"Casablanca,Morocco`"" - The weather, but more of it'
+	write-host '* "weather "Casablanca,Morocco" - The weather :)'
+	write-host '* "weather_full "Casablanca,Morocco" - The weather, but more of it'
 	write-host '* "ls" - Colorized directory output'
 	write-host ''
 	write-host 'Useful Chef/Ohai commands' -foregroundcolor $text_color_error
