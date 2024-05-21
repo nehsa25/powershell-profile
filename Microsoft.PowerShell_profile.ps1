@@ -198,6 +198,7 @@ if ($env:show_ps_profile -ne 'false') {
 	write-host '* "test-path env:pythonpath" - Check for existence of a environment variable'
 	write-host '* "Write-Host $(Get-Date)" - The date'
 	write-host '* "(get-command notepad.exe).Path" - Figure out where something is installed..'
+  write-host '* "get-help get-date - to get command help'
 	write-host ''
 	write-host 'Useful Playwright commands' -foregroundcolor $text_color_error
 	write-host '* "npm init playwright@latest --legacy-peer-deps" - Get Playwright'

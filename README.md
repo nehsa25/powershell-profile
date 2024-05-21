@@ -74,6 +74,7 @@ Useful Powershell commands
 * `test-path env:pythonpath` - Check for existence of a environment variable
 * `Write-Host $(Get-Date)` - The date
 * `(get-command notepad.exe).Path` - Figure out where something is installed..
+* `get-help get-date` - To get help with a command
 
 Useful Playwright commands
 * `npm init playwright@latest --legacy-peer-deps` - Get Playwright
