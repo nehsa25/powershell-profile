@@ -18,8 +18,7 @@ Function Examples:
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
+- [Features](#features)
 
 ## Installation
 
@@ -81,6 +80,3 @@ Useful Playwright commands
 * `npx playwright test` - Runs the end-to-end tests.
 * `npx playwright test --ui` - Opens UI / Interactive Mode
 
-## Tests
-
-None yet..

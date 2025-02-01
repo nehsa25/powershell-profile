@@ -12,6 +12,17 @@ ______                _  _    ______                _
 '@;
 
 
+# we need to loop the modules directory and import all the modules
+$module_path = "<PATH>";
+$modules = Get-ChildItem -Path $module_path -Directory
+write-host "Importing modules from: $module_path";
+foreach ($module in $modules) {
+    $module_name = $module.Name;
+    $module_path = "$module_path/$module_name";
+    write-host "Importing module: $module_name";
+    Import-Module $module_path;
+}
+
 $date = (Get-Date);
 $username = "Jesse";
 $text_color_info = 'DarkGreen';
