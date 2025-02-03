@@ -13,16 +13,11 @@ ______                _  _    ______                _
 
 
 # we need to loop the modules directory and import all the modules
-$module_path = "<PATH>";
+#$basepath = $Env:USERPROFILE;
+$basepath = "C:/Users/jesse/OneDrive/Documents";
+$corePSProfileDir = "$basepath/PowerShell";
+$module_path = "$corePSProfileDir/Modules";
 $modules = Get-ChildItem -Path $module_path -Directory
-write-host "Importing modules from: $module_path";
-foreach ($module in $modules) {
-    $module_name = $module.Name;
-    $module_path = "$module_path/$module_name";
-    write-host "Importing module: $module_name";
-    Import-Module $module_path;
-}
-
 $date = (Get-Date);
 $username = "Jesse";
 $text_color_info = 'DarkGreen';
@@ -212,6 +207,11 @@ if ($env:show_ps_profile -ne 'false') {
     write-host '* "Write-Host $(Get-Date)" - The date'
     write-host '* "(get-command notepad.exe).Path" - Figure out where something is installed..'
     write-host '* "get-help get-date - to get command help'
+    write-host '* "import-module [-force] workmodule - to import a module'
+    write-host '* "remove-module [-force] workmodule - to remove a module'
+    write-host '* "get-module - to list modules'  
+    write-host '* "get-module workmodule | select-object -expandproperty Name - to list functions'  
+    write-host '* "get-command -module workmodule - to list commands in a module'
     write-host ''
     write-host 'Useful Playwright commands' -foregroundcolor $text_color_error
     write-host '* "npm init playwright@latest --legacy-peer-deps" - Get Playwright'
@@ -220,7 +220,21 @@ if ($env:show_ps_profile -ne 'false') {
     write-host ''
 
     #print out the weather
-    weather;
+    #weather;
+    write-host '';
+
+    # ps version
+    write-host "PowerShell Version: $(($PSVersionTable).PSVersion)"
+    write-host '';
+
+    write-host "Importing modules from: $module_path";
+    foreach ($module in $modules) {
+        $module_name = $module.Name;
+        $module_path = "$module_path/$module_name";
+        write-host "Importing module: $module_name";
+        Import-Module $module_path;
+    }
+    write-host '';
 
     # print logo
     write-host $neato_logo -foregroundcolor $text_color_warn;
