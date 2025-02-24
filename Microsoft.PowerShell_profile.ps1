@@ -233,6 +233,7 @@ Set-Alias npp 'notepad++.exe' -option AllScope -Force
 Set-Alias ls 'Get-Colorized-Dir-Items' -option AllScope -Force
 Set-Alias touch 'new-item' -option AllScope -Force
 Set-Alias vscode 'start-vscode' -option AllScope -Force
+Set-Alias grep -Value Select-String -option AllScope -Force
 
 # only print profile if environment variable = true
 if ($env:show_ps_profile -ne 'false') {
@@ -242,6 +243,8 @@ if ($env:show_ps_profile -ne 'false') {
     write-host '* "weather "Casablanca,Morocco" - The weather :)'
     write-host '* "weather_full "Casablanca,Morocco" - The weather, but more of it'
     write-host '* "ls" - Colorized directory output'
+    write-host '* "touch" - Create empty file'
+    write-host '* "grep" - select-string'
     write-host ''
     write-host 'Useful Chef/Ohai commands' -foregroundcolor $text_color_error
     write-host '* "knife cookbook upload -a | chef-client" - Uploads cookbooks and runs chef-client'
@@ -286,7 +289,7 @@ if ($env:show_ps_profile -ne 'false') {
     write-host '* "get-command -module workmodule - to list commands in a module'
     write-host ''
     write-host 'Useful Playwright commands' -foregroundcolor $text_color_error
-    write-host '* "npm init playwright@latest --legacy-peer-deps" - Get Playwright'
+    write-host '* "npm init playwright@latest" - Get Playwright'
     write-host '* "npx playwright test" - Runs the end-to-end tests.'
     write-host '* "npx playwright test --ui" - Opens UI / Interactive Mode'
     write-host ''
