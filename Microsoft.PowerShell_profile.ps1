@@ -12,17 +12,12 @@ ______                _  _    ______                _
 '@;
 
 
-# we need to loop the modules directory and import all the modules
-#$basepath = $Env:USERPROFILE;
-$basepath = "C:/Users/jesse/OneDrive/Documents";
-$corePSProfileDir = "$basepath/PowerShell";
-$module_path = "$corePSProfileDir/Modules";
-$modules = Get-ChildItem -Path $module_path -Directory
 $date = (Get-Date);
 $username = "Jesse";
 $text_color_info = 'DarkGreen';
 $text_color_warn = 'Yellow';
 $text_color_error = 'Red';
+$PSStyle.OutputRendering = "Ansi"
 
 # setup color scheme
 $Host.UI.RawUI.ForegroundColor = 'White'
@@ -84,6 +79,83 @@ function Test-Administrator {
 function start-vscode {
     write-host "It's code.. just code.  Starting!" -foregroundcolor $text_color_warn; 
     start-process -FilePath "code.cmd"
+}
+
+function Write-Host {
+    param(
+        [Parameter(ValueFromPipeline = $true)]
+        [object]$Object,
+
+        [Parameter()]
+        [ConsoleColor]$ForegroundColor = "Green", # Set default to Green
+
+        [Parameter()]
+        [ConsoleColor]$BackgroundColor,
+
+        [Parameter()]
+        [switch]$NoNewline
+    )
+
+    $PSBoundParameters['ForegroundColor'] = $ForegroundColor # Force the color
+    Microsoft.PowerShell.Utility\Write-Host @PSBoundParameters
+}
+
+function Write-HostColor {
+    param(
+        [string]$string,
+        [string]$scheme = "default"
+    )
+    # Define color names for each method
+    $colors = @{
+        default         = @(
+            "Green"
+        )
+        rainbow         = @(
+            "Red",      
+            "Yellow",   
+            "Green",    
+            "Cyan",     
+            "Blue",     
+            "Magenta"  
+        )
+        river           = @(
+            "DarkBlue",   
+            "Blue",      
+            "Gray",       
+            "White"      
+        )
+        fire            = @(
+            "Red",      
+            "DarkYellow",
+            "Yellow"    
+        )
+        moderncorporate = @(
+            "Magenta"
+        )
+        warn            = @(
+            "darkred"           
+        )
+    }
+
+    # Get the appropriate color array based on the method
+    $colorArray = $colors[$scheme]
+
+    # Initialize color index
+    $colorIndex = 0
+
+    # Build the output string with bold and colors
+    for ($i = 0; $i -lt $string.Length; $i++) {
+        $char = $string[$i]
+        if ($scheme -eq 'warn') {
+            Write-Host -NoNewline -BackgroundColor "White" -ForegroundColor $colorArray[$colorIndex] -Object ($bold + $char + $reset)
+        }
+        else {
+            Write-Host -NoNewline -ForegroundColor $colorArray[$colorIndex] -Object ($bold + $char + $reset)
+        }
+        $colorIndex = ($colorIndex + 1) % $colorArray.Count
+    }
+
+    Write-Host "" # Add a newline at the end
 }
 
 function Get-Colorized-Dir-Items {
@@ -221,23 +293,20 @@ if ($env:show_ps_profile -ne 'false') {
 
     #print out the weather
     #weather;
-    write-host '';
+    #write-host '';
 
-    # ps version
-    write-host "PowerShell Version: $(($PSVersionTable).PSVersion)"
-    write-host '';
+    write-host "Importing personal AWS module";
+    Import-Module personalmodule -prefix nehsa;
 
-    write-host "Importing modules from: $module_path";
-    foreach ($module in $modules) {
-        $module_name = $module.Name;
-        $module_path = "$module_path/$module_name";
-        write-host "Importing module: $module_name";
-        Import-Module $module_path;
-    }
-    write-host '';
+    write-host "Importing work AWS module";
+    Import-Module workmodule -prefix work;
 
     # print logo
     write-host $neato_logo -foregroundcolor $text_color_warn;
+
+    # ps version
+    # write-host "PowerShell Version: $(($PSVersionTable).PSVersion)"
+    # write-host '';
 
     $test_admin = Test-Administrator;
     if ($test_admin -ne $true) {
