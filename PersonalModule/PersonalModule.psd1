@@ -6,12 +6,17 @@
     FunctionsToExport = @(
         "Invoke-Login"
         "Invoke-PrintConsoleColors"
+        "Get-ImageLatest"
         "Invoke-BuildAPI"
         "Invoke-TagAPI"
         "Invoke-PublishAPI"
-        "Get-ImageLatest"
         "Invoke-BuildAndPublishAPI"
+        "Invoke-BuildMudReact"
+        "Invoke-TagMudReact"
+        "Invoke-PublishMudReact"
+        "Invoke-BuildAndPublishMudReact"        
         "Invoke-SSHDatabase"
+        "Invoke-RefreshModule"
     )
     ModuleVersion     = "1.0.0"
 }

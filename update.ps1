@@ -25,25 +25,11 @@ write-host "Core Powershell profile updated: $corePSProfilePath";
 copy-item ./Microsoft.PowerShell_profile.ps1 $coreVSProfilePath -Force;
 write-host "Core Powershell profile updated: $coreVSProfilePath";
 
-# Modules
-copy-item ./WorkModule "$modulepath" -Recurse -Force;
-write-host "WorkModule updated: $modulepath";
-
 copy-item ./PersonalModule "$modulepath" -Recurse -Force;
 write-host "PersonalModule updated: $modulepath";
 
-# Because we're running the modules in a script block, we also need to copy the modules here:
-copy-item ./WorkModule "$winPSProfileDir/Modules" -Recurse -Force;
-write-host "WorkModule updated: $winPSProfileDir/Modules";
-
-write-host "Removing workmodule";
-remove-module WorkModule -Force;
-
 write-host "Removing PersonalModule";
 remove-module PersonalModule -Force;
-
-write-host "Importing WorkModule";
-import-module WorkModule;
 
 write-host "Importing PersonalModule";
 import-module PersonalModule;

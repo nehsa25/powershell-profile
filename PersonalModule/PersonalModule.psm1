@@ -13,7 +13,7 @@ function Invoke-Login {
 }
 
 function Invoke-BuildAPI {
-    write-hostcolor "Building nehsa.net API";
+    write-hostcolor "Building www.nehsa.net API";
     $build = (get-date).ToString("yyyyMMddHH");
     write-host "Building docker API image, bulid:  ${build}";
     $cd = (get-location).Path;
@@ -21,6 +21,17 @@ function Invoke-BuildAPI {
     docker build . --platform linux/amd64;
     set-location $cd;
 }
+
+function Invoke-BuildMudReact {
+    write-hostcolor "Building mud.nehsa.net React image";
+    $build = (get-date).ToString("yyyyMMddHH");
+    write-host "Building docker MUD React image, build:  ${build}";
+    $cd = (get-location).Path;
+    set-location C:/src/nehsa/websocket-mud/website/client3
+    docker build . --platform linux/amd64;
+    set-location $cd;
+}
+
 
 function Invoke-TagAPI {
     [CmdletBinding()]
@@ -39,14 +50,67 @@ function Invoke-TagAPI {
     docker tag $id $build;
 }
 
+function Invoke-TagMudReact {
+    [CmdletBinding()]
+    param(
+        [Parameter(HelpMessage = "The name of the environment. e.g. dev|stage|prod")]
+        [string]$env = $settings.DefaultEnvironment,
+        [Parameter(HelpMessage = "The ID of the Docker image. e.g. 1234567890")]
+        [string]$id = "latest"
+    )
+    $build = "mudreact.$((get-date).ToString(`"yyyyMMddHH`"))";
+    write-hostcolor "Tagging Docker image for: $($build)";
+    if ($id -eq "latest") {
+        $id = Get-nehsaImageLatest;
+    }
+    write-hostcolor -string "Tagging image ($id) for repo: $build";
+    docker tag $id $build;
+}
+
 function Invoke-PublishAPI {
-    write-hostcolor "Publishing nehsa.net API"
+    write-hostcolor "Publishing www.nehsa.net API";
+    $repoName  = "nehsa-awsls-1"
     $label = (get-date).ToString("yyyyMMddHH");
     $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
     write-host "Pushing API image to Amazon Lightsail Container";
-    $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($nehsa.RepoName) --label $($label) --image $($build)";
+    $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($repoName) --label $($label) --image $($build)";
     write-host "Running: $cmd";
     invoke-expression $cmd;
+}
+
+function Invoke-PublishMudReact {
+    write-hostcolor "Publishing www.nehsa.net API";
+    $repoName  = "mud-fe"
+    $label = (get-date).ToString("yyyyMMddHH");
+    $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
+    write-host "Pushing API image to Amazon Lightsail Container";
+    $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($repoName) --label $($label) --image $($build)";
+    write-host "Running: $cmd";
+    invoke-expression $cmd;
+}
+
+
+function Invoke-PublishMudReact {
+    write-hostcolor "Publishing mud.nehsa.net API";
+    $repoName    = "nehsa-awsls-1"
+    $label = (get-date).ToString("yyyyMMddHH");
+    $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
+    write-host "Pushing API image to Amazon Lightsail Container";
+    $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($repoName) --label $($label) --image $($build)";
+    write-host "Running: $cmd";
+    invoke-expression $cmd;
+}
+
+function Invoke-RefreshModule {
+    write-hostcolor "Refreshing PersonalModule.psm1 module...";
+    $modulePath = $MyInvocation.MyCommand.Path;
+    if (Test-Path $modulePath) {
+        Remove-Module PersonalModule -Force -ErrorAction SilentlyContinue;
+        Import-Module $modulePath -Force;
+        write-hostcolor "Module refreshed successfully from: $modulePath";
+    } else {
+        write-hostcolor "Error: Module path not found: $modulePath" -ForegroundColor Red;
+    }
 }
 
 function Invoke-BuildAndPublishAPI {
@@ -56,9 +120,16 @@ function Invoke-BuildAndPublishAPI {
     Invoke-nehsaPublishAPI;
 }
 
+function Invoke-BuildAndPublishMudReact {
+    Invoke-nehsaLogin;
+    Invoke-nehsaBuildMudReact;
+    Invoke-nehsaTagMudReact;
+    Invoke-nehsaPublishMudReact;
+}
+
 function Invoke-SSHDatabase{
     write-hostcolor "SSH'ing to Lightsail Database";
-    $ip = "35.92.79.235";
+    $ip = "44.246.62.151";
     $cmd = "ssh -i C:/ssh/ls.pem ubuntu@$ip";
     write-host "Running: $cmd";
     invoke-expression $cmd;

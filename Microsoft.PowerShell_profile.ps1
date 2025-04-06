@@ -224,16 +224,17 @@ function Get-Colorized-Dir-Items {
 function Get-ChildItem-Force { Get-ChildItem -Force }
 
 #aliases
-Set-Alias weather_full 'printweatherfull' -option AllScope -Force
-Set-Alias weatherfull 'printweatherfull' -option AllScope -Force
-Set-Alias full-weather 'printweatherfull' -option AllScope -Force
-Set-Alias fullweather 'printweatherfull' -option AllScope -Force
-Set-Alias weather 'printweather' -option AllScope -Force
-Set-Alias npp 'notepad++.exe' -option AllScope -Force
-Set-Alias ls 'Get-Colorized-Dir-Items' -option AllScope -Force
-Set-Alias touch 'new-item' -option AllScope -Force
-Set-Alias vscode 'start-vscode' -option AllScope -Force
-Set-Alias grep -Value Select-String -option AllScope -Force
+set-alias weather_full 'printweatherfull' -option AllScope -Force
+set-alias weatherfull 'printweatherfull' -option AllScope -Force
+set-alias full-weather 'printweatherfull' -option AllScope -Force
+set-alias fullweather 'printweatherfull' -option AllScope -Force
+set-alias weather 'printweather' -option AllScope -Force
+set-alias npp 'notepad++.exe' -option AllScope -Force
+set-alias ls 'Get-Colorized-Dir-Items' -option AllScope -Force
+set-alias touch 'new-item' -option AllScope -Force
+set-alias vscode 'start-vscode' -option AllScope -Force
+set-alias grep -Value select-string -option AllScope -Force
+set-alias tee -Value tee-object -option AllScope -Force
 
 # only print profile if environment variable = true
 if ($env:show_ps_profile -ne 'false') {
@@ -300,9 +301,6 @@ if ($env:show_ps_profile -ne 'false') {
 
     write-host "Importing personal AWS module";
     Import-Module personalmodule -prefix nehsa;
-
-    write-host "Importing work AWS module";
-    Import-Module workmodule -prefix work;
 
     # print logo
     write-host $neato_logo -foregroundcolor $text_color_warn;
