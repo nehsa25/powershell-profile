@@ -234,7 +234,7 @@ set-alias ls 'Get-Colorized-Dir-Items' -option AllScope -Force
 set-alias touch 'new-item' -option AllScope -Force
 set-alias vscode 'start-vscode' -option AllScope -Force
 set-alias grep -Value select-string -option AllScope -Force
-set-alias tee -Value tee-object -option AllScope -Force
+set-alias tee -value tee-object -option AllScope -force
 
 # only print profile if environment variable = true
 if ($env:show_ps_profile -ne 'false') {
