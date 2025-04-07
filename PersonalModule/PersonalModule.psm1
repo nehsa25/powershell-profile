@@ -82,7 +82,7 @@ function Invoke-PublishMudReact {
     write-hostcolor "Publishing www.nehsa.net API";
     $repoName  = "mud-fe"
     $label = (get-date).ToString("yyyyMMddHH");
-    $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
+    $build = "mudreact.$((get-date).ToString(`"yyyyMMddHH`"))";
     write-host "Pushing API image to Amazon Lightsail Container";
     $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($repoName) --label $($label) --image $($build)";
     write-host "Running: $cmd";
@@ -90,8 +90,8 @@ function Invoke-PublishMudReact {
 }
 
 
-function Invoke-PublishMudReact {
-    write-hostcolor "Publishing mud.nehsa.net API";
+function Invoke-nehsaPublishAPI {
+    write-hostcolor "Publishing www.nehsa.net API";
     $repoName    = "nehsa-awsls-1"
     $label = (get-date).ToString("yyyyMMddHH");
     $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
