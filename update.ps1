@@ -32,4 +32,4 @@ write-host "Removing PersonalModule";
 remove-module PersonalModule -Force;
 
 write-host "Importing PersonalModule";
-import-module PersonalModule;
+import-module PersonalModule -prefix "nehsa";

@@ -32,6 +32,15 @@ function Invoke-BuildMudReact {
     set-location $cd;
 }
 
+function Invoke-BuildMudWebsocket {
+    write-hostcolor "Building mud.nehsa.net websocket image";
+    $build = (get-date).ToString("yyyyMMddHH");
+    write-host "Building docker NehsaMUD websocket image, build:  ${build}";
+    $cd = (get-location).Path;
+    set-location C:/src/nehsa/websocket-mud
+    docker build . --platform linux/amd64;
+    set-location $cd;
+}
 
 function Invoke-TagAPI {
     [CmdletBinding()]
@@ -67,6 +76,23 @@ function Invoke-TagMudReact {
     docker tag $id $build;
 }
 
+function Invoke-TagMudWebsocket {
+    [CmdletBinding()]
+    param(
+        [Parameter(HelpMessage = "The name of the environment. e.g. dev|stage|prod")]
+        [string]$env = $settings.DefaultEnvironment,
+        [Parameter(HelpMessage = "The ID of the Docker image. e.g. 1234567890")]
+        [string]$id = "latest"
+    )
+    $build = "mudwebsocket.$((get-date).ToString(`"yyyyMMddHH`"))";
+    write-hostcolor "Tagging Docker image for: $($build)";
+    if ($id -eq "latest") {
+        $id = Get-nehsaImageLatest;
+    }
+    write-hostcolor -string "Tagging image ($id) for repo: $build";
+    docker tag $id $build;
+}
+
 function Invoke-PublishAPI {
     write-hostcolor "Publishing www.nehsa.net API";
     $repoName  = "nehsa-awsls-1"
@@ -89,12 +115,11 @@ function Invoke-PublishMudReact {
     invoke-expression $cmd;
 }
 
-
-function Invoke-nehsaPublishAPI {
-    write-hostcolor "Publishing www.nehsa.net API";
-    $repoName    = "nehsa-awsls-1"
+function Invoke-PublishMudWebsocket {
+    write-hostcolor "Publishing mud.nehsa.net Websocket image";
+    $repoName    = "mud-be"
     $label = (get-date).ToString("yyyyMMddHH");
-    $build = "api.$((get-date).ToString(`"yyyyMMddHH`"))";
+    $build = "mudwebsocket.$((get-date).ToString(`"yyyyMMddHH`"))";
     write-host "Pushing API image to Amazon Lightsail Container";
     $cmd = "aws lightsail push-container-image --profile nehsa --region $($nehsa.Region) --service-name $($repoName) --label $($label) --image $($build)";
     write-host "Running: $cmd";
@@ -125,6 +150,13 @@ function Invoke-BuildAndPublishMudReact {
     Invoke-nehsaBuildMudReact;
     Invoke-nehsaTagMudReact;
     Invoke-nehsaPublishMudReact;
+}
+
+function Invoke-BuildAndPublishMudWebsocket {
+    Invoke-nehsaLogin;
+    Invoke-nehsaBuildMudWebsocket;
+    Invoke-nehsaTagMudWebsocket;
+    Invoke-nehsaPublishMudWebsocket;
 }
 
 function Invoke-SSHDatabase{

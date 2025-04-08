@@ -14,7 +14,11 @@
         "Invoke-BuildMudReact"
         "Invoke-TagMudReact"
         "Invoke-PublishMudReact"
-        "Invoke-BuildAndPublishMudReact"        
+        "Invoke-BuildAndPublishMudReact"
+        "Invoke-BuildMudWebsocket"
+        "Invoke-TagMudWebsocket"
+        "Invoke-PublishMudWebsocket"
+        "Invoke-BuildAndPublishMudWebsocket"        
         "Invoke-SSHDatabase"
         "Invoke-RefreshModule"
     )
